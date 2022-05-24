@@ -1,6 +1,6 @@
 
 import React, { useEffect, useState } from "react";
-import { Box, Button, HStack, Image, Flex, Heading } from "@chakra-ui/react";
+import { Box, Button, HStack, Image, Flex, Heading, CircularProgress } from "@chakra-ui/react";
 import { useRouter } from "next/dist/client/router";
 import { ResultWeather } from "../modules/ResultWeather";
 import { Wrapper } from "../components/layout/Wrapper";
@@ -9,7 +9,6 @@ import { FetchData } from "../interfaces";
 const Index = (props: any) => {
     const router = useRouter();
     const [location, setLocation] = useState({});
-
 
     useEffect(() => {
         // let ip = "103.176.95.62";
@@ -23,6 +22,7 @@ const Index = (props: any) => {
         //         let longitude = data.longitude
         //         router.push(`/?lat=${latitude}&lon=${longitude}`)
         //     });
+
         fetch(' https://ipapi.co/json/')
             .then(function (response) {
                 return response.json();
@@ -73,7 +73,11 @@ const Index = (props: any) => {
                     </Button>
                 </div>
             </Flex>
-            {data.cod !== '400' && <ResultWeather data={data} location={location} />}
+            {data.cod !== '400' ? <ResultWeather data={data} location={location} /> :
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '300px' }}>
+                    <CircularProgress isIndeterminate color='green.300' />
+                </div>
+            }
         </Wrapper>
     );
 };

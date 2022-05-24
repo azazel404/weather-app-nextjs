@@ -19,8 +19,9 @@ export const index: React.FC<indexProps> = ({ }) => {
             { method: "GET" }
         );
         const result: DataType = await req.json();
-
-        setData(result)
+        if (result.cod !== "400") {
+            setData(result)
+        }
     }
 
     return (
@@ -66,7 +67,7 @@ export const index: React.FC<indexProps> = ({ }) => {
                 </Formik>
             </Box>
             <div>
-                {data && data.cod !== "404" ? (
+                {data ? (
                     <Box>
                         <Text fontSize='xl' mb="4">Search result :</Text>
                         <VStack>
